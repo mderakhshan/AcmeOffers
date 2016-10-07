@@ -2,6 +2,7 @@ package com.acme.service;
 
 import com.acme.service.exceptions.OfferDaoException;
 import com.acme.service.exceptions.OfferDuplicateException;
+import com.acme.service.exceptions.OfferServiceException;
 import mockit.Expectations;
 import mockit.integration.junit4.JMockit;
 import org.junit.Test;
@@ -20,7 +21,7 @@ import static com.acme.TestData.*;
 public class CreateOfferTest extends ServiceTestData {
 
     @Test
-    public void when_OfferDoesntAlreadyExist_Then_ShouldbeCreatedOk () {
+    public void when_OfferDoesntAlreadyExist_Then_ShouldbeCreatedOk () throws OfferServiceException {
         new Expectations () {{
             mockOfferDao.findOfferByTitle (testOffer.getTitle());
             result = null;
@@ -33,7 +34,7 @@ public class CreateOfferTest extends ServiceTestData {
     }
 
     @Test (expected=OfferDuplicateException.class)
-    public void when_OfferAlreadyExists_Then_ShouldRaiseAnOffeDuplicateException () {
+    public void when_OfferAlreadyExists_Then_ShouldRaiseAnOffeDuplicateException () throws OfferServiceException {
         new Expectations () {{
             mockOfferDao.findOfferByTitle (testOffer.getTitle());
             result = testOffer;
@@ -43,7 +44,7 @@ public class CreateOfferTest extends ServiceTestData {
     }
 
     @Test (expected=OfferDaoException.class)
-    public void when_OfferDoesNotComplyWithDBConstraints_Then_ShouldRaiseAnOffeDaoException () {
+    public void when_OfferDoesNotComplyWithDBConstraints_Then_ShouldRaiseAnOffeDaoException () throws OfferServiceException {
         new Expectations () {{
             mockOfferDao.findOfferByTitle (sampleOfferLongTitle);
             result = null;

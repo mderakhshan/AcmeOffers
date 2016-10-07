@@ -2,6 +2,7 @@ package com.acme.service;
 
 import com.acme.dao.OfferDao;
 import com.acme.model.Offer;
+import com.acme.service.exceptions.OfferServiceException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -19,7 +20,7 @@ import static org.springframework.util.Assert.notNull;
 @Validated
 public interface  OfferService {
 
-    void createOffer(Offer offer);
+    void createOffer(Offer offer) throws OfferServiceException;
 
     Offer findOfferByTitle(String offerTitle);
 }

@@ -6,7 +6,7 @@ package com.acme.service.exceptions;
  * This is a generic exception class used to throw exceptions when service methods defined in the class
  * OfferService encounter error conditions.
  */
-public class OfferServiceException extends RuntimeException {
+public class OfferServiceException extends Exception {
     public OfferServiceException(String message) {
         super(message);
     }
