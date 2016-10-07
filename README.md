@@ -11,10 +11,10 @@ Frameworks and Tools Used
 I used the following frameworks when writing the code:
 
 - **Spring Boot**, including the core Spring dependency injection, **Spring MVC** (for developing the rest API), and **Spring Data**
-with **Hibernate**. Spring Boot provides out of the box support for **H2 database** and the code uses it for convenience as an
-in-memory database for storing and querying offers from a database. Also, Spring Boot comes with an embedded servlet container,
-so all you have to do to run the program is run the jar file the build produces and by default it will listen to requests on
-**http://localhost:8080**
+with **Hibernate**. Spring Boot provides support for **H2 database** by simply including its jar in the classpath. The code uses H2
+for convenience as an in-memory database for storing and querying offers from a database. Also, Spring Boot comes with an embedded
+servlet container,so all you have to do to run the program is run the jar file the build produces and by default it will listen to
+requests on **http://localhost:8080**.
 
 - **JMockit** and **JUnit** for developing Unit test code
 
@@ -66,5 +66,5 @@ The following Rest API service is exposed and provided:
 
 Additional Info
 ---------------
-When writing the code, I also included a **findOfferByTitle** method in the service class **OfferService** for finding the offer for a given
+When writing the code, I also included a **findOfferByTitle()** method in the service class **OfferService** for finding the offer for a given
 offer title. I did not however expose this method as a REST end-point as the spec had not asked for it.

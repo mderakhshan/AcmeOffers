@@ -77,14 +77,15 @@ public class RestapiCreateOfferTest extends RestapiTestModule {
         String expected = "Validation failed on field title: length must be between 1 and 40";
         assertThat (resultStr, is (expected));
 
-        // Call by leaving the notNull entity fields such as type, terms, as unspecified
-        Offer badOffer = new Offer(null, "", null, null, null, null);
+        // Call by leaving the notNull properties, terms, as unspecified
+        Offer badOffer = new Offer(null, null, null, null, null, null);
         String badOfferJson = (new Gson()).toJson(badOffer);
         result = mockMvc.perform(post("/offers/create", 1).contentType(MediaType.APPLICATION_JSON).content(badOfferJson))
                 .andExpect(status().isUnprocessableEntity())
                 .andReturn();
         resultStr = result.getResponse().getContentAsString();
-        expected = "Validation failed on field title: Title not specified!\n" +
+        expected = "Validation failed on field type: Type not specified!\n" +
+                "Validation failed on field title: Title not specified!\n" +
                 "Validation failed on field terms: Terms not specified!\n" +
                 "Validation failed on field currencyCode: Currency code not specified!\n" +
                 "Validation failed on field price: Price not specified!";
@@ -93,20 +94,9 @@ public class RestapiCreateOfferTest extends RestapiTestModule {
 
     @Test
     public void when_RequestBodyIsEmpty_ShouldReturnHTTPStatus_400BAD_REQUEST() throws Exception {
-        // The call with invalid currency
+        // call with no content
         mockMvc.perform (post("/offers/create", 1).contentType(MediaType.APPLICATION_JSON).content(""))
                 .andExpect(status().isBadRequest())
                 .andReturn();
     }
-
-//    @Test
-//    public void when_convertErrorsToArray_worksok () {
-//        OfferValidator validator = new OfferValidator();
-//        Offer badOffer = new Offer(null, "Title", null, null, null, null);
-//        Errors errors = new BeanPropertyBindingResult(badOffer, "offer");
-//        validator.validate(badOffer, errors);
-//        String[] allErrors = OfferRestController.
-//        assertThat(errors.getErrorCount(), is(5));
-//    }
-
 }

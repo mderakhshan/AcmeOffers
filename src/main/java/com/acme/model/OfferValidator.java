@@ -27,7 +27,7 @@ public class OfferValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         Offer offer = (Offer) o;
-
+        ValidationUtils.rejectIfEmpty(errors, "type", "offer.type.null");
         ValidationUtils.rejectIfEmpty(errors, "title", "offer.title.null");
         ValidationUtils.rejectIfEmpty(errors, "terms", "offer.terms.null");
         ValidationUtils.rejectIfEmpty(errors, "currencyCode", "offer.currencyCode.null");
