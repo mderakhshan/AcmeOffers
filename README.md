@@ -11,10 +11,10 @@ Frameworks and Tools Used
 I used the following frameworks when writing the code:
 
 - **Spring Boot**, including the core Spring dependency injection, **Spring MVC** (for developing the rest API), and **Spring Data**
-with **Hibernate**. Spring Boot provides support for **H2 database** by simply including its jar in the classpath. The code uses H2
-for convenience as an in-memory database for storing and querying offers from a database. Also, Spring Boot comes with an embedded
-servlet container,so all you have to do to run the program is run the jar file the build produces and by default it will listen to
-requests on **http://localhost:8080**.
+with **Hibernate**. Spring Boot provides support for the **H2 database** engine by simply including its jar in the classpath. The 
+code uses a H2 database for convenience as an in-memory database for storing and querying offers from a database. Also, Spring 
+Boot comes with an embedded servlet container. So all you have to do to run the web application is run the jar file 
+the build produces. When running, by default, the application will listen to requests to **http://localhost:8080**.
 
 - **JMockit** and **JUnit** for developing Unit test code
 
@@ -39,7 +39,7 @@ The following Rest API service is exposed and provided:
 	  **"title"**: "a string of *length of 1 to 80* characters",<br>
       *"description"*: "a string of *max length 1024* characters", <br>
        **"terms"**:"a string of *length 1024* characters", <br>
-       **"currencyCode"**:A 3-letter currency code supported by Java",<br>
+       **"currencyCode"**:A 3-letter currency code supported by Java, e.g. GBP, USD, AUD, etc.",<br>
        **"price"**:1.0<br>
       }
 	+ An Example: <br>

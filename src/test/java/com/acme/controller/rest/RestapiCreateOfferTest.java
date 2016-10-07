@@ -25,7 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Created by Mir on 04/10/2016.
  *
- * Tests for the /offer/create API Rest end point
+ * Tests for the /offers/create API Rest end point
  *
  */
 //
@@ -34,7 +34,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class RestapiCreateOfferTest extends RestapiTestModule {
 
     @Test
-    public void when_AddingAnOfferThatDoesntExist_Then_ShouldReturnHTTPStatus_200CREATED() throws Exception {
+    public void when_CreatingAnOfferThatDoesntExist_Then_ShouldReturnHTTPStatus_200CREATED() throws Exception {
         MvcResult result =
                 mockMvc.perform
                         (post("/offers/create", 1).contentType(MediaType.APPLICATION_JSON).content(randomSampleOfferJson()))
@@ -44,7 +44,7 @@ public class RestapiCreateOfferTest extends RestapiTestModule {
     }
 
     @Test
-    public void when_AddingAnOfferThatAlreadyExists_Then_ShouldReturnHTTPStatus_422UNPROCESSABLE_ENTITY() throws Exception {
+    public void when_CreatingAnOfferThatAlreadyExists_Then_ShouldReturnHTTPStatus_422UNPROCESSABLE_ENTITY() throws Exception {
 
         String offerTitle = randomSampleOfferJson();
         // The first call should create the offer
@@ -59,16 +59,15 @@ public class RestapiCreateOfferTest extends RestapiTestModule {
     }
 
     @Test
-    public void when_AddingAnOfferAndTheCurrencyCodeIsInvalid_Then_ShouldReturnHTTPStatus_422UNPROCESSABLE_ENTITY() throws Exception {
+    public void when_CreatingAnOfferAndTheCurrencyCodeIsInvalid_Then_ShouldReturnHTTPStatus_422UNPROCESSABLE_ENTITY() throws Exception {
         // The call with invalid currency
         mockMvc.perform (post("/offers/create", 1).contentType(MediaType.APPLICATION_JSON).content(sampleOfferWIthInvalidCurrencyJson))
                 .andExpect(status().isUnprocessableEntity())
                 .andReturn();
     }
 
-
     @Test
-    public void when_AddingAnOfferThatViolatesDatabaseConstraints_Then_ShouldReturnHTTPStatus_422UNPROCESSABLE_ENTITY() throws Exception {
+    public void when_CreatingAnOfferThatViolatesDatabaseConstraints_Then_ShouldReturnHTTPStatus_422UNPROCESSABLE_ENTITY() throws Exception {
         // call with a long title should violate database schema
         MvcResult result = mockMvc.perform(post("/offers/create", 1).contentType(MediaType.APPLICATION_JSON).content(sampleOfferLongTitleJson))
                 .andExpect(status().isUnprocessableEntity())
