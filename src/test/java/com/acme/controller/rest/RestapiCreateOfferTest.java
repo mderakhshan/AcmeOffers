@@ -25,7 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Created by Mir on 04/10/2016.
  *
- * Tests for the /offers/create API Rest end point
+ * Tests for the /offers API Rest end point
  *
  */
 //
@@ -37,7 +37,7 @@ public class RestapiCreateOfferTest extends RestapiTestModule {
     public void when_CreatingAnOfferThatDoesntExist_Then_ShouldReturnHTTPStatus_200CREATED() throws Exception {
         MvcResult result =
                 mockMvc.perform
-                        (post("/offers/create", 1).contentType(MediaType.APPLICATION_JSON).content(randomSampleOfferJson()))
+                        (post("/offers", 1).contentType(MediaType.APPLICATION_JSON).content(randomSampleOfferJson()))
                         .andExpect(status().isCreated())
                         .andReturn();
         result.getResponse().getContentAsString();
@@ -48,12 +48,12 @@ public class RestapiCreateOfferTest extends RestapiTestModule {
 
         String offerTitle = randomSampleOfferJson();
         // The first call should create the offer
-        mockMvc.perform (post("/offers/create", 1).contentType(MediaType.APPLICATION_JSON).content(offerTitle))
+        mockMvc.perform (post("/offers", 1).contentType(MediaType.APPLICATION_JSON).content(offerTitle))
                .andExpect(status().isCreated())
                .andReturn();
 
         // The second call to create the same offer should return the HTTP status code we are looking for
-        mockMvc.perform (post("/offers/create", 1).contentType(MediaType.APPLICATION_JSON).content(offerTitle))
+        mockMvc.perform (post("/offers", 1).contentType(MediaType.APPLICATION_JSON).content(offerTitle))
                .andExpect(status().isUnprocessableEntity())
                .andReturn();
     }
@@ -61,7 +61,7 @@ public class RestapiCreateOfferTest extends RestapiTestModule {
     @Test
     public void when_CreatingAnOfferAndTheCurrencyCodeIsInvalid_Then_ShouldReturnHTTPStatus_422UNPROCESSABLE_ENTITY() throws Exception {
         // The call with invalid currency
-        mockMvc.perform (post("/offers/create", 1).contentType(MediaType.APPLICATION_JSON).content(sampleOfferWIthInvalidCurrencyJson))
+        mockMvc.perform (post("/offers", 1).contentType(MediaType.APPLICATION_JSON).content(sampleOfferWIthInvalidCurrencyJson))
                 .andExpect(status().isUnprocessableEntity())
                 .andReturn();
     }
@@ -69,7 +69,7 @@ public class RestapiCreateOfferTest extends RestapiTestModule {
     @Test
     public void when_CreatingAnOfferThatViolatesDatabaseConstraints_Then_ShouldReturnHTTPStatus_422UNPROCESSABLE_ENTITY() throws Exception {
         // call with a long title should violate database schema
-        MvcResult result = mockMvc.perform(post("/offers/create", 1).contentType(MediaType.APPLICATION_JSON).content(sampleOfferLongTitleJson))
+        MvcResult result = mockMvc.perform(post("/offers", 1).contentType(MediaType.APPLICATION_JSON).content(sampleOfferLongTitleJson))
                 .andExpect(status().isUnprocessableEntity())
                 .andReturn();
         String resultStr = result.getResponse().getContentAsString();
@@ -79,7 +79,7 @@ public class RestapiCreateOfferTest extends RestapiTestModule {
         // Call by leaving the notNull properties, terms, as unspecified
         Offer badOffer = new Offer(null, null, null, null, null, null);
         String badOfferJson = (new Gson()).toJson(badOffer);
-        result = mockMvc.perform(post("/offers/create", 1).contentType(MediaType.APPLICATION_JSON).content(badOfferJson))
+        result = mockMvc.perform(post("/offers", 1).contentType(MediaType.APPLICATION_JSON).content(badOfferJson))
                 .andExpect(status().isUnprocessableEntity())
                 .andReturn();
         resultStr = result.getResponse().getContentAsString();
@@ -94,7 +94,7 @@ public class RestapiCreateOfferTest extends RestapiTestModule {
     @Test
     public void when_RequestBodyIsEmpty_ShouldReturnHTTPStatus_400BAD_REQUEST() throws Exception {
         // call with no content
-        mockMvc.perform (post("/offers/create", 1).contentType(MediaType.APPLICATION_JSON).content(""))
+        mockMvc.perform (post("/offers", 1).contentType(MediaType.APPLICATION_JSON).content(""))
                 .andExpect(status().isBadRequest())
                 .andReturn();
     }

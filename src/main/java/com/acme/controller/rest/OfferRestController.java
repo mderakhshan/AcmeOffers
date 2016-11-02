@@ -35,7 +35,7 @@ public class OfferRestController {
     @Autowired
     private MessageSource messageSource;
 
-    @RequestMapping(value="/create", method=RequestMethod.POST)
+    @RequestMapping(method=RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> createOffer(@Valid @RequestBody(required=true) Offer newOffer, BindingResult errors) {
         if (errors.hasErrors()) {
